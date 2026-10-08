@@ -1,0 +1,45 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: minimax-h3-app
+  profiles:
+    # 預設啟用 local profile，讀取 application-local.yml（不進 git）裡的真實金鑰。
+    # 如果連 application-local.yml 都沒有，也不會啟動失敗，只是 fal.api-key 會是空字串。
+    active: local
+  datasource:
+    url: jdbc:h2:file:./data/minimax-h3;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+fal:
+  # 真正的金鑰請放在 application-local.yml（見同資料夾的 application-local.yml.example），
+  # 這裡只留一個安全的預設空值，避免這個檔案不小心 commit 出去也不會外洩金鑰。
+  api-key: ${FAL_KEY:}
+  base-url: https://queue.fal.run
+  models:
+    # 暫時先用 H3 Max（每天 5 次免費額度），驗證流程用，不會產生費用。
+    # 之後 fal.ai 帳號加值完成，要換回一般版 H3，把下面三行的 h3-max 改回 h3 即可
+    # （或加值後帳號有餘額，一般版 h3/* 應該就不會再 403）。
+    text-to-video: minimax/h3-max/text-to-video
+    image-to-video: minimax/h3-max/image-to-video
+    # 這個 reference-to-video 的 h3-max 版本 model id 未經過 100% 官方文件核對（只在 fal 官方推文看到
+    # 「Reference-to-Video 已支援 H3 Max」），若跑這條路徑遇到 404，回來我再幫你查證正確 model id。
+    reference-to-video: minimax/h3-max/reference-to-video
+
+logging:
+  level:
+    com.rainforest.minimax: DEBUG

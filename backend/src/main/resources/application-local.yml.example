@@ -1,0 +1,9 @@
+# 使用方式：
+# 1. 複製這個檔案，改名成 application-local.yml（去掉 .example）
+# 2. 把下面換成你真實的 fal.ai API Key
+# 3. application-local.yml 已經被 .gitignore 排除，不會被 commit 上 git，可以放心寫真實金鑰
+#
+# 這個檔案本身（.example）可以安心 commit，因為它不含真實金鑰。
+
+fal:
+  api-key: 貼上你的-fal-api-key

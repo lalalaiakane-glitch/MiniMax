@@ -1,0 +1,15 @@
+# backend
+backend/target/
+backend/data/
+backend/*.log
+
+# 真實金鑰檔，絕對不要 commit（.example 版本可以 commit）
+backend/src/main/resources/application-local.yml
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+
+# secrets
+.env
+*.env
